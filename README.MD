@@ -11,7 +11,7 @@ Below are the assumptions that I have made.
 * For the second output file, I have assumed that the mentioned port is the destination port.
 * If there is a csv entry  
 
-## Useage
+## Usage
 
 To run the application execute the below commands.   
 ```

@@ -13,8 +13,10 @@ public class FlowRecord {
     private long bytes;
     private long start;
     private long end;
+    private String action;
+    private String logStatus;
 
-    public FlowRecord(int version, String accountId, String interfaceId, String srcAddr, String dstAddr, int srcPort, int dstPort, int protocol, long packets, long bytes, long start, long end, String action) {
+    public FlowRecord(int version, String accountId, String interfaceId, String srcAddr, String dstAddr, int srcPort, int dstPort, int protocol, long packets, long bytes, long start, long end, String action, String logStatus) {
         this.version = version;
         this.accountId = accountId;
         this.interfaceId = interfaceId;
@@ -27,6 +29,24 @@ public class FlowRecord {
         this.bytes = bytes;
         this.start = start;
         this.end = end;
+        this.action = action;
+        this.logStatus = logStatus;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public String getLogStatus() {
+        return logStatus;
+    }
+
+    public void setLogStatus(String logStatus) {
+        this.logStatus = logStatus;
     }
 
     public int getVersion() {

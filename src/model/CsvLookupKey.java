@@ -2,11 +2,12 @@ package model;
 
 import java.util.Objects;
 
-public class LookupCsvKey {
-    private int port;
-    private int protocol;
+public class CsvLookupKey {
 
-    public LookupCsvKey(int port, int protocol) {
+    private int port;
+    private String protocol;
+
+    public CsvLookupKey(int port, String protocol) {
         this.port = port;
         this.protocol = protocol;
     }
@@ -19,11 +20,11 @@ public class LookupCsvKey {
         this.port = port;
     }
 
-    public int getProtocol() {
+    public String getProtocol() {
         return protocol;
     }
 
-    public void setProtocol(int protocol) {
+    public void setProtocol(String protocol) {
         this.protocol = protocol;
     }
 
@@ -31,8 +32,8 @@ public class LookupCsvKey {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LookupCsvKey that = (LookupCsvKey) o;
-        return port == that.port && protocol == that.protocol;
+        CsvLookupKey that = (CsvLookupKey) o;
+        return port == that.port && Objects.equals(protocol, that.protocol);
     }
 
     @Override

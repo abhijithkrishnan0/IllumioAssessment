@@ -20,7 +20,10 @@ account_id = '123456789012'
 interface_id = 'eni-abcdef12'
 op_filename = 'flowlog.log'
 
+
 def generate_flow_log():
+
+
     version = 2
     src_ip = random.choice(ip_list)
     dst_ip = random.choice(ip_list)
@@ -45,7 +48,13 @@ def generate_flow_log():
         log_file.write(flow_log)
 
 def generate_flow_logs():
-    for _ in range(100000):
+    count = 0
+
+    for _ in range(100):
+        count = count + 1
+        if count == 2:
+            with open(op_filename, 'a') as log_file:
+                    log_file.write("")
         generate_flow_log()
 
 generate_flow_logs()
