@@ -1,15 +1,18 @@
-package service;
+package util;
 
-import exception.InvalidProtocolIdException;
+import exception.InvalidProtocolException;
 import model.LookupCsvKey;
+import model.PortProtocol;
+import model.Tag;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UtilService {
+import static constants.CsvConstant.PORT_PROTO_COUNT_HEADER;
+import static constants.CsvConstant.TAG_COUNT_HEADER;
+
+public class FlowRecordAnalyzerUtil {
 
     public static final Map<String, Integer> PROTOCOL_NAME_TO_ID_MAP = Map.ofEntries(
             Map.entry("hopopt", 0),
@@ -292,8 +295,8 @@ public class UtilService {
             Map.entry(142, "rohc")
     );
 
-    public static Map<LookupCsvKey,String> lookupCsvParser(String filename) throws IOException {
-        Map<LookupCsvKey, String> lookupMap = new HashMap<>();
+    public static Map<LookupCsvKey, Tag> lookupCsvParser(String filename) throws IOException {
+        Map<LookupCsvKey, Tag> lookupMap = new HashMap<>();
         BufferedReader file = new BufferedReader(new FileReader(filename));
 
         // Skip header
@@ -307,8 +310,7 @@ public class UtilService {
                 continue;
             }
             LookupCsvKey key = new LookupCsvKey(Integer.valueOf(parts[0].trim()), getProtocolId(parts[1].trim()));
-            String tag = parts[2].trim();
-            lookupMap.put(key, tag);
+            lookupMap.put(key, new Tag(parts[2].trim()));
         }
         file.close();
         return lookupMap;
@@ -319,6 +321,42 @@ public class UtilService {
         if (id != null){
             return id;
         }
-        throw new InvalidProtocolIdException(protocol);
+        throw new InvalidProtocolException("Invalid protocol: " + protocol);
+    }
+
+    public static String getProtocolFromId(Integer id){
+        String protocol = ID_TO_PROTOCOL_NAME_MAP.get(id);
+        if (id != null){
+            return protocol;
+        }
+        throw new InvalidProtocolException("Inavalid protocol id passed - " + id );
+    }
+
+    public static void exportTagCounts(String filename, Map<Tag, Integer> tagCounts) throws IOException {
+        try (BufferedWriter outFile = new BufferedWriter(new FileWriter(filename, true))) {
+            outFile.write(TAG_COUNT_HEADER);
+            outFile.newLine();
+
+            for (Map.Entry<Tag, Integer> entry : tagCounts.entrySet()) {
+                outFile.write(entry.getKey().getTagName() + "," + entry.getValue());
+                outFile.newLine();
+            }
+        } catch (IOException e) {
+            throw new IOException("Unable to open file " + filename, e);
+        }
+    }
+
+    public static void exportPortProtocolCount(String filename, Map<PortProtocol, Integer> map) throws IOException {
+        try (BufferedWriter outFile = new BufferedWriter(new FileWriter(filename, true))) {
+            outFile.write(PORT_PROTO_COUNT_HEADER);
+            outFile.newLine();
+
+            for (Map.Entry<PortProtocol, Integer> entry : map.entrySet()) {
+                outFile.write(entry.getKey().getPort() + "," + entry.getKey().getProtocol() + ", " + entry.getValue());
+                outFile.newLine();
+            }
+        } catch (IOException e) {
+            throw new IOException("Unable to open file " + filename, e);
+        }
     }
 }
