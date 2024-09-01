@@ -50,7 +50,7 @@ def generate_flow_log():
 def generate_flow_logs():
     count = 0
 
-    for _ in range(100):
+    for _ in range(100000):
         count = count + 1
         if count == 2:
             with open(op_filename, 'a') as log_file:

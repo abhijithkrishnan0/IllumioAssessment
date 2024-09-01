@@ -45,7 +45,7 @@ public class Main {
             FlowRecordWriterService flowRecordCsvWriterService = new FlowRecordCsvWriterServiceImpl();
             flowRecordCsvWriterService.exportTagCounts(tagCountCSV, tagCountMap);
             flowRecordCsvWriterService.exportPortProtocolCount(portProtocolCountCSV, portProtocolCountMap);
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(1);
         }

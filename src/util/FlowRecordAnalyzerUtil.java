@@ -159,7 +159,6 @@ public class FlowRecordAnalyzerUtil {
         Map<CsvLookupKey, Tag> lookupMap = new HashMap<>();
         BufferedReader file = new BufferedReader(new FileReader(filename));
 
-        // Skip header
         String line = file.readLine();
         while ((line = file.readLine()) != null) {
             if (line.trim().isEmpty()) {
