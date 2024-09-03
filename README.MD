@@ -37,6 +37,7 @@ The project is mainly written in Java. I have used Python for scripting to gener
 
 Below are the assumptions that I have made.
 
+* The tag names are case sensitive. For example, "tag_name1" and "TAG_NAME1" are two different entries. This can be modified to be case insensitive as well if required.
 * For the second output file, I have assumed that the specified port refers to the destination port.
 * In cases where a CSV or log entry is malformed, the corresponding record will be skipped.
 * If there is no occurrence of a given tag, the entry will not be included in the output file.
