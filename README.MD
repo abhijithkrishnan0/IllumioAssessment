@@ -22,7 +22,7 @@ The project is mainly written in Java. I have used Python for scripting to gener
       This class implements the `FlowRecordWriterService` interface. It provides a concrete implementation to export the processed data into CSV files. This implementation ensures that the output data is correctly formatted and written to files that can be easily analyzed or integrated with other systems.
 
     - **`FlowRecordAnalyzerUtil.java`**:  
-      This utility class contains various helper methods essential for data processing tasks. Key functionalities include extracting data from the lookup CSV file and managing the mapping between protocol IDs and their corresponding protocol strings. This class plays a pivotal role in ensuring the accuracy and efficiency of the data parsing and tagging processes.
+      This utility class contains various helper methods essential for data processing tasks. Key functionalities include extracting data from the lookup CSV file and managing the mapping between protocol IDs and their corresponding protocol strings. 
 
 - **`scripts/` Directory**:  
   Contains Python scripts used for generating test data:
@@ -41,6 +41,7 @@ Below are the assumptions that I have made.
 * In cases where a CSV or log entry is malformed, the corresponding record will be skipped.
 * If there is no occurrence of a given tag, the entry will not be included in the output file.
 * As outlined in the assignment, this application only supports flow logs with the default version 2.
+* Contents of the file will remain static during processing. 
 
 ## Usage
 
@@ -70,12 +71,8 @@ The project is developed in Java and requires five input arguments to run:
 3. **Lookup File**:  
    The path to the lookup table or CSV file used for mapping flow log entries to tags.
 
-4. **Output File 1**:  
-   The path where the first output file will be generated, containing the count of occurrences for each tag in the flow log.
-
-5. **Output File 2**:  
-   The path where the second output file will be generated, listing the count of occurrences for each destination port and protocol pair.
-
+4. **Output Prefix**:  
+   The "prefix" for both the output files. The file name will be prefixed followed by either "_port_proto_count.csv" or "_tag_count.csv".
 
 ## Testing
 

@@ -14,7 +14,7 @@ import java.util.Map;
 public class FlowRecordAnalyzerUtil {
 
 
-    public static final Map<Integer, String> ID_TO_PROTOCOL_NAME_MAP = Map.ofEntries(
+    private static final Map<Integer, String> ID_TO_PROTOCOL_NAME_MAP = Map.ofEntries(
             Map.entry(0, "hopopt"),
             Map.entry(1, "icmp"),
             Map.entry(2, "igmp"),
@@ -176,12 +176,12 @@ public class FlowRecordAnalyzerUtil {
     }
 
 
-    public static String getProtocolFromId(Integer id){
+    public static String getProtocolFromId(Integer id) {
         String protocol = ID_TO_PROTOCOL_NAME_MAP.get(id);
-        if (id != null){
+        if (id != null) {
             return protocol;
         }
-        throw new InvalidProtocolException(ApplicationConstants.ERROR_INVALID_PROTOCOL_ID_PASSED + id );
+        throw new InvalidProtocolException(ApplicationConstants.ERROR_INVALID_PROTOCOL_ID_PASSED + id);
     }
 
 }

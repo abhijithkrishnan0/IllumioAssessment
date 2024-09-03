@@ -14,8 +14,8 @@ import util.FlowRecordAnalyzerUtil;
 
 public class Main {
     public static void main(String[] args) {
-        if (args.length != 5) {
-            System.out.println("Usage: java Main <batchSize> <flowlogFile> <lookupCSV> <tagCountCSV> <portProtocolCountCSV>");
+        if (args.length != 4) {
+            System.out.println("Usage: java Main <batchSize> <flowlogFile> <lookupCsv> <outputCsvPrefix>");
             return;
         }
 
@@ -24,8 +24,7 @@ public class Main {
 
             String flowlogFile = args[1];
             String lookupCSV = args[2];
-            String tagCountCSV = args[3];
-            String portProtocolCountCSV = args[4];
+            String outputCsvPrefix = args[3];
             FlowRecordBatchService flowRecordBatchService = new FlowRecordBatchService(batchSize, flowlogFile);
             Map<CsvLookupKey, Tag> lookupCsvMap = FlowRecordAnalyzerUtil.lookupCsvParser(lookupCSV);
             Map<Tag, Integer> tagCountMap = new HashMap<>();
@@ -42,9 +41,9 @@ public class Main {
                     portProtocolCountMap.merge(portProtocolSearchKey, 1, Integer::sum);
                 }
             } while (!records.isEmpty());
-            FlowRecordWriterService flowRecordCsvWriterService = new FlowRecordCsvWriterServiceImpl();
-            flowRecordCsvWriterService.exportTagCounts(tagCountCSV, tagCountMap);
-            flowRecordCsvWriterService.exportPortProtocolCount(portProtocolCountCSV, portProtocolCountMap);
+            FlowRecordWriterService flowRecordCsvWriterService = new FlowRecordCsvWriterServiceImpl(outputCsvPrefix);
+            flowRecordCsvWriterService.exportTagCounts(tagCountMap);
+            flowRecordCsvWriterService.exportPortProtocolCount(portProtocolCountMap);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(1);
